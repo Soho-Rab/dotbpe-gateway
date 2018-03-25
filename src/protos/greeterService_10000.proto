@@ -1,0 +1,59 @@
+
+syntax = "proto3";
+package dotbpe;
+
+option csharp_namespace = "SlideApp";
+
+import public "dotbpe_option.proto";
+
+option optimize_for = SPEED;
+option (generic_objectfactory) = true; //对象工厂
+option (generic_http_api_routes) = true; //是否生成路由
+option (generic_markdown_doc) = true; //生成Markdown文档
+
+// Hello的请求消息
+message HelloReq {
+  string client_ip = 1; // 客户端IP
+  string identity = 2; //  用户标识
+  string x_request_id = 3 ; // 请求ID
+
+
+  string name = 10 ; // 名称
+}
+
+// Hello的请求响应消息
+message HelloRes {
+    string return_message = 1; //返回消息内容
+
+    string greet_word = 10 ; // 问候语
+}
+
+// 问候语句
+service GreeterService{
+    option (service_id)= 10000 ;//设定服务号
+
+    //SayHello 服务
+    rpc SayHello (HelloReq) returns (HelloRes){
+        option (message_id)= 1 ;//设定消息号
+
+        option (http_api_option) = {
+            path : "/api/greeter/sayhello",
+            method : "get",
+            description : "SayHello 服务"
+        };
+
+    };
+
+    //SayHelloAgain 服务
+    rpc SayHelloAgain (HelloReq) returns (HelloRes){
+        option (message_id)= 2 ;//设定消息号
+
+        option (http_api_option) = {
+            path : "/api/greeter/sayhelloagain",
+            method : "get",
+            description : "SayHelloAgain 服务"
+        };
+
+    };
+
+}

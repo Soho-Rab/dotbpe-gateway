@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotBPE.AspNetGateway", "DotBPE.AspNetGateway\DotBPE.AspNetGateway.csproj", "{A675C12B-4EA2-4209-8EA0-6CE29C1496E8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SlideApp", "SlideApp\SlideApp.csproj", "{6B074D91-BE21-4D37-80BD-EA78203576F9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A675C12B-4EA2-4209-8EA0-6CE29C1496E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A675C12B-4EA2-4209-8EA0-6CE29C1496E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A675C12B-4EA2-4209-8EA0-6CE29C1496E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A675C12B-4EA2-4209-8EA0-6CE29C1496E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B074D91-BE21-4D37-80BD-EA78203576F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B074D91-BE21-4D37-80BD-EA78203576F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B074D91-BE21-4D37-80BD-EA78203576F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B074D91-BE21-4D37-80BD-EA78203576F9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {38D3579A-E44C-4D7E-9C97-ED91CF63FBB7}
+	EndGlobalSection
+EndGlobal
