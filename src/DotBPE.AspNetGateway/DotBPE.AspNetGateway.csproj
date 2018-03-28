@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Version>$(VersionSuffix)</Version>
-    <Description>dotbpe-gateway  提供简易的方式，将HttpWebApi请求转换层DotBPE调用，可作为简易的服务网关使用</Description>
+    <Description>dotbpe-gateway  鎻愪緵绠�鏄撶殑鏂瑰紡锛屽皢HttpWebApi璇锋眰杞崲灞侱otBPE璋冪敤锛屽彲浣滀负绠�鏄撶殑鏈嶅姟缃戝叧浣跨敤</Description>
     <Copyright>Xuanye @ 2018</Copyright>
     <Authors>Xuanye</Authors>
     <AssemblyTitle>DotBPE.AspNetGateway</AssemblyTitle>

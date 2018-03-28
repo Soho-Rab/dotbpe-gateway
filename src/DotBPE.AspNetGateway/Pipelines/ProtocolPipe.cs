@@ -72,7 +72,7 @@ namespace DotBPE.AspNetGateway.Pipelines
                 return false;
             }
 
-            ////收集数据
+            //收集数据
             RequestData rd = new RequestData();
             hasRes = await ParseRequestAsync(req, res, router, rd);
 
@@ -140,7 +140,7 @@ namespace DotBPE.AspNetGateway.Pipelines
             SetContentType(req, res, resMessage);
             bool result = false;
             IHttpPostProcessPlugin<TMessage> plugin = null;
-            if (router.Plugin != null && router.Plugin is IHttpOutputPlugin<TMessage>)
+            if (router.Plugin != null && router.Plugin is IHttpPostProcessPlugin<TMessage>)
             {
                 plugin = router.Plugin as IHttpPostProcessPlugin<TMessage>;
             }

@@ -12,7 +12,7 @@ mkdir -p $artifactsFolder
 
 
 
-versionNumber="1.1.1"
+versionNumber="1.1.2"
 
 dotnet pack ./DotBPE.AspNetGateway/DotBPE.AspNetGateway.csproj -c Release -o ../$artifactsFolder  --version-suffix=$versionNumber
 
