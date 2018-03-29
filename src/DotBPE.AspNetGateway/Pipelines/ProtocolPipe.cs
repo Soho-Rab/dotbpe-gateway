@@ -8,6 +8,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -87,7 +88,11 @@ namespace DotBPE.AspNetGateway.Pipelines
             {
                 return hasRes;
             }
-
+            hasRes = await BeforeAsyncCall(req, res, rd);
+            if (hasRes)
+            {
+                return hasRes;
+            }
             try
             {
                 //协议转换
@@ -183,6 +188,9 @@ namespace DotBPE.AspNetGateway.Pipelines
             {
                 collDataDict.Add(Constants.IDENTITY_FIELD_NAME,
                     request.HttpContext.User.Identity.Name);
+                    
+                  //将所有的Claims 全局加到Dict中
+                request.HttpContext.User.Claims.ToList().ForEach(item => collDataDict.Add(item.Type, item.Value));
             }
 
             //从Head中提取 x-request-id
@@ -203,6 +211,18 @@ namespace DotBPE.AspNetGateway.Pipelines
             collDataDict.Add(Constants.REQUESTID_FIELD_NAME, requestId);
         }
 
+        /// <summary>
+        /// 在实际调用调用服务前最后的处理
+        /// </summary>
+        /// <param name="req"></param>
+        /// <param name="router"></param>
+        /// <param name="rd"></param>
+        /// <returns></returns>
+        protected virtual Task<bool> BeforeAsyncCall(HttpRequest req, HttpResponse res ,RequestData rd)
+        {
+            return Task.FromResult(false);
+        }
+        
         /// <summary>
         /// 从请求中提取请求数据到RequestData中
         /// </summary>
@@ -286,17 +306,18 @@ namespace DotBPE.AspNetGateway.Pipelines
             rd.ServiceId = router.ServiceId;
             rd.Data = new Dictionary<string, string>();
             if (plugin != null)
-            {
-                CollectCommonData(req, rd.Data);
+            {              
                 result = await plugin.ParseAsync(req, res, rd, router);
+                CollectCommonData(req, rd.Data);
                 return result;
             }
             else
             {
                 try
                 {
-                    CollectCommonData(req, rd.Data);
+                    
                     ProcessRequestData(req, router, rd);
+                    CollectCommonData(req, rd.Data);
                 }
                 catch (Exception ex)
                 {
@@ -306,7 +327,7 @@ namespace DotBPE.AspNetGateway.Pipelines
                     return true;
                 }
             }
-
+         
             return result;
         }
 
