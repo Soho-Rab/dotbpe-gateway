@@ -239,7 +239,14 @@ namespace DotBPE.AspNetGateway.Pipelines
             string contentType = "";
             if (method == "post" || method == "put")
             {
-                contentType = req.ContentType.ToLower().Split(';')[0];
+                if (string.IsNullOrEmpty(req.ContentType))
+                {
+                    contentType = "application/x-www-form-urlencoded";
+                }
+                else
+                {
+                    contentType = req.ContentType.ToLower().Split(';')[0];
+                }               
             }
 
             if (contentType == "application/x-www-form-urlencoded"
