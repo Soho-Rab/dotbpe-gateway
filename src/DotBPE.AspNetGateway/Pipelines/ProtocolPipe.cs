@@ -189,7 +189,7 @@ namespace DotBPE.AspNetGateway.Pipelines
                 collDataDict.Add(Constants.IDENTITY_FIELD_NAME,
                     request.HttpContext.User.Identity.Name);
                     
-                  //将所有的Claims 全局加到Dict中
+                //将所有的Claims 全局加到Dict中
                 request.HttpContext.User.Claims.ToList().ForEach(item => collDataDict.Add(item.Type, item.Value));
             }
 
