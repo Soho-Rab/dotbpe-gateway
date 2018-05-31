@@ -97,6 +97,15 @@ namespace DotBPE.AspNetGateway.Pipelines
             {
                 //协议转换
                 TMessage reqMsg = this._parser.ToMessage(rd);
+
+                if(reqMsg == null)
+                {
+                    this._logger.LogWarning("req serviceId={0},messageId={1} parse error", rd.ServiceId, rd.MessageId);
+                    res.StatusCode = (int)HttpStatusCode.InternalServerError;
+                    await res.WriteAsync("wrong format");
+                    return true;
+                }
+
                 TMessage rspMsg = await _invoker.AsyncCall(reqMsg, router.TimeOut > 0 ? router.TimeOut : 3000);
 
                 if (rspMsg != null)
