@@ -6,11 +6,12 @@ using System.Collections.Generic;
 
 namespace SlideApp {
     public static class HttpApiRouterOptions {
-        public static List<HttpApiOption> GetList()
-        {
-            var list = new List<HttpApiOption>();
 
-            list.Add(new HttpApiOption()
+
+        static Dictionary<string, List<HttpApiOption>> routeDict = new Dictionary<string, List<HttpApiOption>>();
+        static HttpApiRouterOptions()
+        { 
+            AddRouter("",new HttpApiOption()
             {
                 ServiceId = 10000,
                 MessageId = 1,
@@ -20,8 +21,7 @@ namespace SlideApp {
                 Timeout = 0,
                 Plugin = ""
             });
-
-            list.Add(new HttpApiOption()
+            AddRouter("",new HttpApiOption()
             {
                 ServiceId = 10000,
                 MessageId = 2,
@@ -30,8 +30,27 @@ namespace SlideApp {
                 Description ="SayHelloAgain 服务",
                 Timeout = 0,
                 Plugin = ""
-            });
- return list;
+            }); 
+        }
+
+        private static void AddRouter(string category, HttpApiOption routerOption)
+        {
+            category = string.IsNullOrEmpty(category) ? "default" : category;
+            if (!routeDict.ContainsKey(category))
+            {
+                routeDict.Add(category, new List<HttpApiOption>());
+            }          
+            routeDict[category].Add(routerOption);
+        }
+
+        public static List<HttpApiOption> GetList(string category="default")
+        {
+            if (routeDict.ContainsKey(category))
+            {
+                return routeDict[category];
+            }
+
+            return new List<HttpApiOption>();
         }
     }
 }

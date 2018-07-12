@@ -19,8 +19,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotBPE.Rpc" Version="1.1.31" />
-    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.0" />
+    <PackageReference Include="DotBPE.Rpc" Version="1.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.1.1" />
   </ItemGroup>
 
 </Project>

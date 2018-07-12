@@ -39,14 +39,16 @@ namespace SlideApp {
             {
                 result.Code = response.Code;
             }
-            else if (response.Data == null)
+            
+            if (response.Data == null)
             {
-                result.Code = ErrorCodes.CODE_INTERNAL_ERROR;
+                result.Data  =  new HelloRes();
             }
             else
             {
                 result.Data = HelloRes.Parser.ParseFrom(response.Data);
             }
+
             return result;
         }
 
@@ -65,9 +67,10 @@ namespace SlideApp {
             {
                 result.Code = response.Code;
             }
-            else if (response.Data == null)
+            
+            if (response.Data == null)
             {
-                result.Code = ErrorCodes.CODE_INTERNAL_ERROR;
+                result.Data = new HelloRes();
             }
             else
             {
@@ -96,14 +99,16 @@ namespace SlideApp {
             {
                 result.Code = response.Code;
             }
-            else if (response.Data == null)
+            
+            if (response.Data == null)
             {
-                result.Code = ErrorCodes.CODE_INTERNAL_ERROR;
+                result.Data  =  new HelloRes();
             }
             else
             {
                 result.Data = HelloRes.Parser.ParseFrom(response.Data);
             }
+
             return result;
         }
 
@@ -122,9 +127,10 @@ namespace SlideApp {
             {
                 result.Code = response.Code;
             }
-            else if (response.Data == null)
+            
+            if (response.Data == null)
             {
-                result.Code = ErrorCodes.CODE_INTERNAL_ERROR;
+                result.Data = new HelloRes();
             }
             else
             {
