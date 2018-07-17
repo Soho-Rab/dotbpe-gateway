@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace DotBPE.AspNetGateway.Pipelines
 {
-    public class ProtocolPipe<TMessage>: IPipeline where TMessage : InvokeMessage
+    public class ProtocolPipe<TMessage> : IPipeline where TMessage : InvokeMessage
     {
         private readonly ILogger _logger;
         private readonly HttpRouterOption _option;
@@ -36,7 +36,7 @@ namespace DotBPE.AspNetGateway.Pipelines
             _invoker = invoker;
             _parser = parser;
             _option = optionsAccessor.Value;
-            
+
             _logger = loggerFactory.CreateLogger(this.GetType());
         }
 
@@ -98,7 +98,7 @@ namespace DotBPE.AspNetGateway.Pipelines
                 //协议转换
                 TMessage reqMsg = this._parser.ToMessage(rd);
 
-                if(reqMsg == null)
+                if (reqMsg == null)
                 {
                     this._logger.LogWarning("req serviceId={0},messageId={1} parse error", rd.ServiceId, rd.MessageId);
                     res.StatusCode = (int)HttpStatusCode.InternalServerError;
@@ -197,9 +197,13 @@ namespace DotBPE.AspNetGateway.Pipelines
             {
                 collDataDict.Add(Constants.IDENTITY_FIELD_NAME,
                     request.HttpContext.User.Identity.Name);
-                    
+
                 //将所有的Claims 全局加到Dict中
                 request.HttpContext.User.Claims.ToList().ForEach(item => collDataDict.Add(item.Type, item.Value));
+            }
+            else
+            {
+                collDataDict.Add(Constants.IDENTITY_FIELD_NAME, ""); //没有登录
             }
 
             //从Head中提取 x-request-id
@@ -227,11 +231,11 @@ namespace DotBPE.AspNetGateway.Pipelines
         /// <param name="router"></param>
         /// <param name="rd"></param>
         /// <returns></returns>
-        protected virtual Task<bool> BeforeAsyncCall(HttpRequest req, HttpResponse res ,RequestData rd)
+        protected virtual Task<bool> BeforeAsyncCall(HttpRequest req, HttpResponse res, RequestData rd)
         {
             return Task.FromResult(false);
         }
-        
+
         /// <summary>
         /// 从请求中提取请求数据到RequestData中
         /// </summary>
@@ -242,16 +246,16 @@ namespace DotBPE.AspNetGateway.Pipelines
             var method = req.Method.ToLower();
 
             rd.ServiceId = router.ServiceId;
-            rd.MessageId = router.MessageId;         
+            rd.MessageId = router.MessageId;
 
             CollectQuery(req.Query, rd.Data);
             string contentType = "";
             if (method == "post" || method == "put")
             {
-                if (!string.IsNullOrEmpty(req.ContentType))            
+                if (!string.IsNullOrEmpty(req.ContentType))
                 {
                     contentType = req.ContentType.ToLower().Split(';')[0];
-                }               
+                }
             }
 
             if (contentType == "application/x-www-form-urlencoded"
@@ -318,7 +322,7 @@ namespace DotBPE.AspNetGateway.Pipelines
             rd.ServiceId = router.ServiceId;
             rd.Data = new Dictionary<string, string>();
             if (plugin != null)
-            {              
+            {
                 result = await plugin.ParseAsync(req, res, rd, router);
                 CollectCommonData(req, rd.Data);
                 return result;
@@ -327,19 +331,18 @@ namespace DotBPE.AspNetGateway.Pipelines
             {
                 try
                 {
-                    
                     ProcessRequestData(req, router, rd);
                     CollectCommonData(req, rd.Data);
                 }
                 catch (Exception ex)
                 {
                     res.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    await res.WriteAsync("InternalServerError:"+ex.Message);
+                    await res.WriteAsync("InternalServerError:" + ex.Message);
                     _logger.LogError(ex, "转换HTTP请求到RPC请求出错");
                     return true;
                 }
             }
-         
+
             return result;
         }
 
